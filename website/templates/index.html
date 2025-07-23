@@ -1,0 +1,200 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Vollkorn:400,400i,600,700,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}" /> {# ADDED: Link for auth-specific CSS #}
+    <title>The Road</title>
+    <style>
+      /* Smooth scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="open-navbar-icon navbar-icon center">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+
+      <div class="navbar-wrapper">
+        <nav class="navbar">
+          <div class="close-navbar-icon navbar-icon center">
+            <div class="line line-1"></div>
+            <div class="line line-2"></div>
+          </div>
+          <div class="nav-list">
+            <a href="{% url 'home' %}" class="nav-link center">Home</a> {# CHANGED: Use Django URL tag #}
+            <a href="#tours" class="nav-link center">Tours</a>
+            <a href="#about" class="nav-link center">About Us</a>
+            <a href="#contact" class="nav-link center">Contact</a>
+            
+            {# Conditional display for Login/Signup/Logout based on user authentication status #}
+            {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-link center login-btn" style="border:none; background:none; cursor:pointer;">Logout ({{ user.username }})</button>
+                </form>
+            {% else %}
+                <a href="{% url 'signup' %}" class="nav-link center signup-btn">Sign Up</a> {# CHANGED: Use Django URL tag #}
+                <a href="{% url 'login' %}" class="nav-link center login-btn">Login</a> {# CHANGED: Use Django URL tag #}
+            {% endif %}
+          </div>
+        </nav>
+      </div>
+
+      <header id="home" class="header center">
+        {# Display Django messages (success, error, info) at the top of the content #}
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="header-text">
+          <h1 class="heading">Around the world</h1>
+          <p class="header-paragraph">
+            "Traveling - it leaves you speechless, then turns you into a storyteller"
+          </p>
+          <a href="{% url 'signup' %}" class="hero-button">Get Started</a> {# CHANGED: Use Django URL tag #}
+        </div>
+        <img
+          src="{% static 'images/air-balloon.png' %}"
+          alt="Header Image"
+          class="header-image"
+        />
+        <div class="logo">
+          <h1>
+            <span class="center">t</span>
+            <span class="center">h</span>
+            <span class="center">e</span>
+            <span class="center">r</span>
+            <span class="center">o</span>
+            <span class="center">a</span>
+            <span class="center">d</span>
+          </h1>
+        </div>
+      </header>
+
+      {# This is the main content block that other templates (login.html, signup.html) will override #}
+      {% block content %}
+      <section id="tours" class="popular-tours">
+        <h1 class="popular-tours-heading">The Most Popular Tours</h1>
+        <div class="cards-wrapper">
+          {% for tour in tours %}
+          <div class="card">
+            <div class="front-side">
+              <img src="{{ tour.image.url }}" alt="{{ tour.title }}" class="card-image" />
+              <h1 class="tour-name">{{ tour.title }}</h1>
+              <ul class="card-list">
+                <li class="card-list-item">{{ tour.duration }}</li>
+                <li class="card-list-item">Difficulty: {{ tour.difficulty }}</li>
+                <li class="card-list-item">{{ tour.description|truncatewords:12 }}</li>
+              </ul>
+              <div class="card-actions">
+                <p class="tour-price-front">₹{{ tour.price }}</p>
+                {# START OF STEP 6 MODIFICATION #}
+                <a href="{% url 'tour_detail' tour.id %}" class="card-button-front center">Booking</a>
+                {# END OF STEP 6 MODIFICATION #}
+                <button class="navigation-button">Details &gt;&gt;</button>
+              </div>
+            </div>
+            <div class="back-side center">
+              <h3 class="back-side-heading">More About {{ tour.title }}</h3>
+              <p class="back-side-description">
+                  Discover the breathtaking landscapes and unique experiences of {{ tour.title }}.
+                  This tour offers an unparalleled adventure for all enthusiasts.
+              </p>
+              <button class="navigation-button">&lt;&lt; back</button>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section id="about" class="stories">
+        <div class="video-container">
+          <video class="bg-video" autoplay muted loop>
+            <source src="https://i.imgur.com/eFQiGDl.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="stories-wrapper">
+          <div class="story-bg">
+            <div class="story">
+              <img src="{% static 'images/story-img-1.jpg' %}" alt="Customer image" class="story-image" />
+              <div class="story-text">
+                <h1 class="story-heading">These were the best days of this year</h1>
+                <p class="story-paragraph">
+                  Exploring your tourism website was an absolute delight! The design is vibrant and inviting, perfectly capturing the spirit of adventure and discovery. Navigation is smooth, making it easy to find exciting destinations and travel tips. The vivid images and well-crafted content truly inspire wanderlust, encouraging visitors to plan their next unforgettable journey. Overall, it’s a fantastic resource for anyone looking to make their travel dreams come true. These really were the best days of the year!
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="story-bg">
+            <div class="story">
+              <img src="{% static 'images/story-img-2.jpg' %}" alt="Customer image" class="story-image" />
+              <div class="story-text">
+                <h1 class="story-heading">I enjoyed this great tour</h1>
+                <p class="story-paragraph">
+                  Your tourism website offers an engaging and user-friendly experience that truly captures the excitement of travel. The beautiful visuals and clear information made planning a breeze, and I felt inspired to explore new destinations right away. It’s a great platform for anyone looking to enjoy an unforgettable tour. Highly recommended!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="contact">
+        <h1 class="contact-heading">Contact Us</h1>
+        <form class="contact-form center">
+          <div class="input-group">
+            <label>Full Name *</label>
+            <input type="text" class="contact-input" placeholder="Enter Your Name" />
+          </div>
+          <div class="input-groups">
+            <div class="input-group">
+              <label>Email *</label>
+              <input type="email" class="contact-input" placeholder="Enter Your Email" />
+            </div>
+            <div class="input-group">
+              <label>Phone</label>
+              <input type="text" class="contact-input" placeholder="Enter Phone Number" />
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Message</label>
+            <textarea class="form-textarea" placeholder="Your Message Here..."></textarea>
+          </div>
+          <input type="submit" value="Submit" class="form-btn" />
+        </form>
+      </section>
+      {% endblock content %} {# END of the content block #}
+
+      <footer class="footer">
+        <div class="footer-list">
+          <a href="{% url 'home' %}" class="footer-link">Home</a> {# Changed #}
+          <a href="#tours" class="footer-link">Tours</a>
+          <a href="#about" class="footer-link">About Us</a>
+          <a href="#offer" class="footer-link">Offer</a> {# You might want to remove this if not present on page #}
+          <a href="#contact" class="footer-link">Contact</a>
+        </div>
+        <p class="footer-paragraph">
+          Copyright &copy; CodeAndCreate All Rights Reserved
+        </p>
+      </footer>
+    </div>
+    <script src="{% static 'js/script.js' %}" async defer></script>
+  </body>
+</html>   

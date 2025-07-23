@@ -1,0 +1,33 @@
+{% extends 'index.html' %} 
+{% load static %} 
+
+{% block title %}Sign Up{% endblock %} 
+
+{% block content %} {# This block will replace the {% block content %} in index.html #}
+<section class="auth-form-section"> 
+    <div class="form-container">
+        <h2>Create Your Account</h2> 
+        
+        
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form method="post" action="{% url 'signup' %}"> 
+            {% csrf_token %} 
+            
+           
+            {{ form.as_p }} 
+            
+            <button type="submit" class="auth-btn">Sign Up</button> 
+        </form>
+        <p class="auth-switch"> 
+            Already have an account? <a href="{% url 'login' %}">Login here</a> 
+        </p>
+    </div>
+</section>
+{% endblock content %} 

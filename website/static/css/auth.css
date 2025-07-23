@@ -1,0 +1,185 @@
+/* website/static/css/auth.css */
+
+/* Variables (if defined in style.css, ensure they are accessible or redefine here) */
+/* Example: */
+:root {
+    --primary-color: #3f51b5; /* Example blue */
+    --secondary-color: #f2f2f2; /* Example light grey background */
+    --white-color: #ffffff;
+    --grey-color: #555;
+    --light-grey-color: #ccc;
+    /* Add any other colors you use from your style.css if needed */
+}
+
+
+/* Section for login/signup forms, acting as the full-page container */
+.auth-form-section {
+    /* Full viewport height, minus potential fixed header/footer if any */
+    min-height: calc(100vh - 7rem); /* Adjust 7rem if your header height is different */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8rem 2rem; /* Ample padding for responsiveness */
+    /* Example background - adjust path if needed based on your static structure */
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url(../images/header-bg.jpg) center no-repeat;
+    background-size: cover;
+    background-attachment: fixed; /* Optional: for parallax-like effect */
+}
+
+/* Container for the form itself (the card-like box) */
+.form-container {
+    background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
+    padding: 4rem;
+    border-radius: 0.8rem;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 50rem; /* Max width for forms */
+    text-align: center;
+    position: relative; /* For z-index if needed with overlapping elements */
+    z-index: 10;
+}
+
+/* Heading for login/signup (e.g., "Create Your Account") */
+.form-container h2 {
+    font-size: 3.5rem;
+    color: var(--primary-color);
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font-weight: 700; /* Ensure bold as per your screenshots */
+}
+
+/* Styles for Django Form elements rendered by {{ form.as_p }} */
+/* The <p> tag that wraps each label and input */
+.form-container form p {
+    margin-bottom: 2rem; /* Space between fields */
+    text-align: left; /* Align labels/inputs left within the form-container */
+}
+
+/* The <label> tag for each field */
+.form-container form p label {
+    display: block; /* Make label appear on its own line */
+    font-size: 1.6rem;
+    color: var(--grey-color);
+    margin-bottom: 0.5rem; /* Space between label and input */
+    font-weight: 600;
+}
+
+/* The <input> tags for text, email, and password fields */
+.form-container form p input[type="text"],
+.form-container form p input[type="email"],
+.form-container form p input[type="password"] {
+    width: 100%;
+    padding: 1.2rem 1.5rem;
+    font-size: 1.8rem;
+    border: 0.1rem solid var(--light-grey-color);
+    border-radius: 0.5rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box; /* Crucial for full width without overflow */
+}
+
+/* Focus state for inputs */
+.form-container form p input[type="text"]:focus,
+.form-container form p input[type="email"]:focus,
+.form-container form p input[type="password"]:focus {
+    border-color: var(--primary-color);
+    outline: none; /* Remove default outline */
+}
+
+/* Styles for the submit button */
+.auth-btn {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    padding: 1.5rem 3rem; /* Larger padding for a more prominent button */
+    font-size: 2rem;
+    border-radius: 5rem; /* Pill-shaped button */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 2rem; /* Space above button */
+    width: 100%;
+    max-width: 25rem; /* Max width for the button */
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font-weight: 600;
+}
+
+.auth-btn:hover {
+    background-color: #1a66c9; /* Darker shade on hover */
+}
+
+/* Styles for the "Already have an account?" / "Don't have an account?" link */
+.auth-switch {
+    font-size: 1.6rem;
+    color: var(--grey-color);
+    margin-top: 2rem;
+}
+
+.auth-switch a {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.auth-switch a:hover {
+    color: #1a66c9; /* Darker shade on hover */
+}
+
+/* Styles for Django error messages specific to fields */
+.form-container ul.errorlist {
+    color: #dc3545; /* Bootstrap-like red for errors */
+    font-size: 1.4rem;
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+    margin-top: 0.5rem; /* Space above error list */
+    margin-bottom: 1rem; /* Space below error list */
+    text-align: left; /* Align error messages with fields */
+}
+
+.form-container ul.errorlist li {
+    margin-bottom: 0.2rem; /* Small space between multiple errors for one field */
+}
+
+/* General messages from Django's messages framework (success, error, info) */
+/* These will appear where you put `{% if messages %}` block in your base template */
+.messages {
+    list-style: none;
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: absolute; /* Position messages absolutely if needed, depends on base layout */
+    top: 5rem; /* Example position, adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 60rem; /* Max width for messages */
+    z-index: 999; /* Ensure messages are on top */
+}
+
+.messages li {
+    padding: 1rem 2rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1); /* Subtle shadow for messages */
+}
+
+.messages .success {
+    background-color: #d4edda; /* Light green */
+    color: #155724; /* Dark green text */
+    border: 1px solid #c3e6cb;
+}
+
+.messages .error {
+    background-color: #f8d7da; /* Light red */
+    color: #721c24; /* Dark red text */
+    border: 1px solid #f5c6cb;
+}
+
+.messages .info {
+    background-color: #d1ecf1; /* Light blue */
+    color: #0c5460; /* Dark blue text */
+    border: 1px solid #bee5eb;
+}
