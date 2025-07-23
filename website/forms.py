@@ -1,7 +1,7 @@
 # website/forms.py
 
 from django import forms
-from .models import Booking
+from .models import Booking,Review
 
 class BookingForm(forms.ModelForm):
     
@@ -24,3 +24,23 @@ class BookingForm(forms.ModelForm):
         widgets = {
             'special_requests': forms.Textarea(attrs={'rows': 4}), 
         }
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['rating', 'comment']
+        widgets = {
+            'rating': forms.NumberInput(attrs={
+    'min': 1,
+    'max': 5,
+    'placeholder': 'Enter a rating from 1 to 5',
+    'class': 'form-control',
+}),
+            'comment': forms.Textarea(attrs={'placeholder': 'Share your experience...', 'rows': 5}),
+        }
+
+    def clean_rating(self):
+        rating = self.cleaned_data.get('rating')
+        if not rating or rating < 1 or rating > 5:
+            raise forms.ValidationError("Please select a star rating between 1 and 5.")
+        return rating

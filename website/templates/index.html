@@ -10,10 +10,9 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/auth.css' %}" /> {# ADDED: Link for auth-specific CSS #}
-    <title>The Road</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}" />
+    <title>{% block title %}The Road{% endblock %}</title>
     <style>
-      /* Smooth scrolling */
       html {
         scroll-behavior: smooth;
       }
@@ -34,11 +33,11 @@
             <div class="line line-2"></div>
           </div>
           <div class="nav-list">
-            <a href="{% url 'home' %}" class="nav-link center">Home</a> {# CHANGED: Use Django URL tag #}
+            <a href="{% url 'home' %}" class="nav-link center">Home</a>
             <a href="#tours" class="nav-link center">Tours</a>
             <a href="#about" class="nav-link center">About Us</a>
             <a href="#contact" class="nav-link center">Contact</a>
-            
+
             {# Conditional display for Login/Signup/Logout based on user authentication status #}
             {% if user.is_authenticated %}
                 <form action="{% url 'logout' %}" method="post" style="display:inline;">
@@ -46,8 +45,8 @@
                     <button type="submit" class="nav-link center login-btn" style="border:none; background:none; cursor:pointer;">Logout ({{ user.username }})</button>
                 </form>
             {% else %}
-                <a href="{% url 'signup' %}" class="nav-link center signup-btn">Sign Up</a> {# CHANGED: Use Django URL tag #}
-                <a href="{% url 'login' %}" class="nav-link center login-btn">Login</a> {# CHANGED: Use Django URL tag #}
+                <a href="{% url 'signup' %}" class="nav-link center signup-btn">Sign Up</a>
+                <a href="{% url 'login' %}" class="nav-link center login-btn">Login</a>
             {% endif %}
           </div>
         </nav>
@@ -68,7 +67,7 @@
           <p class="header-paragraph">
             "Traveling - it leaves you speechless, then turns you into a storyteller"
           </p>
-          <a href="{% url 'signup' %}" class="hero-button">Get Started</a> {# CHANGED: Use Django URL tag #}
+          <a href="{% url 'signup' %}" class="hero-button">Get Started</a>
         </div>
         <img
           src="{% static 'images/air-balloon.png' %}"
@@ -105,17 +104,15 @@
               </ul>
               <div class="card-actions">
                 <p class="tour-price-front">₹{{ tour.price }}</p>
-                {# START OF STEP 6 MODIFICATION #}
                 <a href="{% url 'tour_detail' tour.id %}" class="card-button-front center">Booking</a>
-                {# END OF STEP 6 MODIFICATION #}
                 <button class="navigation-button">Details &gt;&gt;</button>
               </div>
             </div>
             <div class="back-side center">
               <h3 class="back-side-heading">More About {{ tour.title }}</h3>
               <p class="back-side-description">
-                  Discover the breathtaking landscapes and unique experiences of {{ tour.title }}.
-                  This tour offers an unparalleled adventure for all enthusiasts.
+                Discover the breathtaking landscapes and unique experiences of {{ tour.title }}.
+                This tour offers an unparalleled adventure for all enthusiasts.
               </p>
               <button class="navigation-button">&lt;&lt; back</button>
             </div>
@@ -131,28 +128,21 @@
           </video>
         </div>
         <div class="stories-wrapper">
+          {% for story in stories %} {# Loop through dynamic stories #}
           <div class="story-bg">
             <div class="story">
-              <img src="{% static 'images/story-img-1.jpg' %}" alt="Customer image" class="story-image" />
+              <img src="{{ story.image.url }}" alt="{{ story.title }}" class="story-image" />
               <div class="story-text">
-                <h1 class="story-heading">These were the best days of this year</h1>
+                <h1 class="story-heading">{{ story.title }}</h1>
                 <p class="story-paragraph">
-                  Exploring your tourism website was an absolute delight! The design is vibrant and inviting, perfectly capturing the spirit of adventure and discovery. Navigation is smooth, making it easy to find exciting destinations and travel tips. The vivid images and well-crafted content truly inspire wanderlust, encouraging visitors to plan their next unforgettable journey. Overall, it’s a fantastic resource for anyone looking to make their travel dreams come true. These really were the best days of the year!
+                  {{ story.content }}
                 </p>
               </div>
             </div>
           </div>
-          <div class="story-bg">
-            <div class="story">
-              <img src="{% static 'images/story-img-2.jpg' %}" alt="Customer image" class="story-image" />
-              <div class="story-text">
-                <h1 class="story-heading">I enjoyed this great tour</h1>
-                <p class="story-paragraph">
-                  Your tourism website offers an engaging and user-friendly experience that truly captures the excitement of travel. The beautiful visuals and clear information made planning a breeze, and I felt inspired to explore new destinations right away. It’s a great platform for anyone looking to enjoy an unforgettable tour. Highly recommended!
-                </p>
-              </div>
-            </div>
-          </div>
+          {% empty %} {# Display if no stories exist #}
+          <p>No stories to display yet. Add some in the Django admin!</p>
+          {% endfor %}
         </div>
       </section>
 
@@ -180,14 +170,14 @@
           <input type="submit" value="Submit" class="form-btn" />
         </form>
       </section>
-      {% endblock content %} {# END of the content block #}
+      {% endblock content %} {# END of the main content block #}
 
       <footer class="footer">
         <div class="footer-list">
-          <a href="{% url 'home' %}" class="footer-link">Home</a> {# Changed #}
+          <a href="{% url 'home' %}" class="footer-link">Home</a>
           <a href="#tours" class="footer-link">Tours</a>
           <a href="#about" class="footer-link">About Us</a>
-          <a href="#offer" class="footer-link">Offer</a> {# You might want to remove this if not present on page #}
+          <a href="#offer" class="footer-link">Offer</a>
           <a href="#contact" class="footer-link">Contact</a>
         </div>
         <p class="footer-paragraph">
@@ -196,5 +186,6 @@
       </footer>
     </div>
     <script src="{% static 'js/script.js' %}" async defer></script>
+    {% block extra_js %}{% endblock %}
   </body>
-</html>   
+</html>

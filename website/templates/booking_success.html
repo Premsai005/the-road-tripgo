@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Vollkorn:400,400i,600,700,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" /> {# You might still want global styles #}
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}" /> {# Include if needed for general auth styles #}
+    <title>Booking Successful</title>
+    <style>
+        /* CSS for the booking success page, embedded directly */
+        .booking-success-container {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            margin: 50px auto;
+        }
+
+        .booking-success-container h1 {
+            color: #28a745;
+            margin-bottom: 25px;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .booking-success-container p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .booking-success-container .button-group {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .booking-success-container .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 1em;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .booking-success-container .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border: 1px solid #007bff;
+        }
+
+        .booking-success-container .btn-primary:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .booking-success-container .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            border: 1px solid #6c757d;
+        }
+
+        .booking-success-container .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    {# You might want to include your header/navbar here if you want it on this page #}
+    {# For this example, I'm only including the main content block #}
+    
+    <div class="container booking-success-container">
+        <h1>🎉 Booking Confirmed!</h1>
+        <p>Thank you for your booking! Your request has been successfully received.</p>
+        <p>We've sent a confirmation to your email address (if provided).</p>
+        <p>We look forward to seeing you on your adventure!</p>
+        <div class="button-group">
+            <a href="{% url 'home' %}" class="btn btn-primary">Go to Home</a>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Browse More Tours</a>
+        </div>
+    </div>
+
+    {# You might also want to include your footer here #}
+    <script src="{% static 'js/script.js' %}" async defer></script> {# Include global JS if needed #}
+</body>
+</html>

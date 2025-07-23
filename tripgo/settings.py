@@ -1,15 +1,14 @@
-from pathlib import Path
-import os # ADDED: Import os module for path manipulation
+import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!g_bu&kv1^$n+%a@s*+kmp)vqycb$2vgz96k1a)ryb!71qio40'
+SECRET_KEY = 'django-insecure-your-secret-key-here' # Replace with your actual secret key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -26,7 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'website', # Your app is correctly listed here
+    'website',
 ]
 
 MIDDLEWARE = [
@@ -44,14 +43,11 @@ ROOT_URLCONF = 'tripgo.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # MODIFIED: Tell Django where to find your project-wide templates.
-        # Since 'index.html' is acting as your base, and it's inside website/templates,
-        # we explicitly point to that directory.
-        'DIRS': [os.path.join(BASE_DIR, 'website', 'templates')],
-        'APP_DIRS': True, # Keep this so Django also looks for templates inside app's 'templates' folder (e.g., admin templates)
+        'DIRS': [os.path.join(BASE_DIR, 'website/templates')],
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug', # ADDED: Useful debug context
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -64,18 +60,23 @@ WSGI_APPLICATION = 'tripgo.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+# tripgo/settings.py
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'tripgo_db',        
+        'USER': 'tripgo_user',       
+        'PASSWORD': 'premsai#23', 
+        'HOST': 'localhost',          
+        'PORT': '',                    
     }
 }
 
-
 # Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
+# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -94,7 +95,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
+
 
 LANGUAGE_CODE = 'en-us'
 
@@ -105,25 +106,22 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = '/static/' # MODIFIED: Add leading slash for consistency and best practice
+
+STATIC_URL = '/static/'
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'website', 'static') # MODIFIED: Use os.path.join for clarity and cross-OS compatibility
+    os.path.join(BASE_DIR, 'website/static'),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # ADDED: Essential for `python manage.py collectstatic`
 
-# MEDIA files configuration (for images uploaded via models, like Tour.image)
-MEDIA_URL = '/media/' # ADDED: URL prefix for media files
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # ADDED: Directory where uploaded media files will be stored
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Media files (for uploaded images like tour images)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Authentication redirects (Crucial for login/logout flow)
-LOGIN_REDIRECT_URL = 'home' # Where to redirect after successful login. 'home' is the name of your index URL.
-LOGOUT_REDIRECT_URL = 'login' # Where to redirect after logout. 'login' is the name of your login URL.
-LOGIN_URL = 'login' # The URL name for your login page. Used by @login_required decorator. 

@@ -1,0 +1,74 @@
+[
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$sqQvEZjJ9OonBSmWxKrF6o$nsZWMTKuMZnD6Arqklm+LlN+O6k2uqV81CadS65vxN8=",
+    "last_login": "2025-07-23T10:57:23.500Z",
+    "is_superuser": true,
+    "username": "prem2",
+    "first_name": "",
+    "last_name": "",
+    "email": "psai7828@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-07-23T10:56:55.022Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "website.tour",
+  "pk": 1,
+  "fields": {
+    "title": "manali",
+    "description": "Manali is a picturesque hill station in Himachal Pradesh, nestled in the Beas River Valley. Surrounded by snow-capped peaks, lush forests, and apple orchards, it's a popular destination for honeymooners, adventure seekers, and nature lovers. Key attractions include Solang Valley, Rohtang Pass, and Hidimba Devi Temple.",
+    "duration": "6 Days",
+    "difficulty": "medium",
+    "image": "tours/manal_ExF18da.jpg",
+    "price": "6500.00"
+  }
+},
+{
+  "model": "website.tour",
+  "pk": 2,
+  "fields": {
+    "title": "dharamsala",
+    "description": "Dharamsala, also in Himachal Pradesh, is known for its serene environment and Tibetan culture. It is the home of the Dalai Lama and the Tibetan government-in-exile. Set against the backdrop of the Dhauladhar mountains, it's famous for McLeod Ganj, Buddhist monasteries, and trekking trails like Triund.",
+    "duration": "3 Days",
+    "difficulty": "Easy",
+    "image": "tours/dharam_7iwLNwS.jpg",
+    "price": "4000.00"
+  }
+},
+{
+  "model": "website.booking",
+  "pk": 1,
+  "fields": {
+    "tour": 2,
+    "full_name": "prem",
+    "email": "psai7828@gmail.com",
+    "phone_number": "9391166435",
+    "number_of_people": 4,
+    "preferred_date": "2025-07-26",
+    "special_requests": "",
+    "booked_at": "2025-07-23T11:00:05.585Z",
+    "status": "confirmed"
+  }
+},
+{
+  "model": "website.booking",
+  "pk": 2,
+  "fields": {
+    "tour": 1,
+    "full_name": "eswar",
+    "email": "p2514958@gmail.com",
+    "phone_number": "9391166435",
+    "number_of_people": 5,
+    "preferred_date": "2025-07-26",
+    "special_requests": "",
+    "booked_at": "2025-07-23T11:00:30.500Z",
+    "status": "confirmed"
+  }
+}
+]

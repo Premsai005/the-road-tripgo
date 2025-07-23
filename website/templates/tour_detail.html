@@ -34,6 +34,9 @@
                 {{ form.as_p }}
                 <button type="submit" class="booking-submit-btn">Confirm Booking & Proceed</button>
             </form>
+
+            <!-- Write a Review Button -->
+            <a href="{% url 'submit_review' tour.id %}" class="write-review-btn">Write a Review</a>
         </div>
     </div>
 </section>
@@ -46,7 +49,7 @@
     min-height: calc(100vh - 7rem);
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Align to top */
+    align-items: flex-start;
 }
 
 .tour-detail-container {
@@ -54,7 +57,7 @@
     border-radius: 0.8rem;
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 90rem; /* Wider container for tour details */
+    max-width: 90rem;
     padding: 4rem;
     display: flex;
     flex-direction: column;
@@ -67,7 +70,7 @@
 
 .tour-detail-image {
     max-width: 100%;
-    height: 40rem; /* Fixed height for consistency */
+    height: 40rem;
     object-fit: cover;
     border-radius: 0.8rem;
     margin-bottom: 2rem;
@@ -119,7 +122,7 @@
     margin-bottom: 2.5rem;
 }
 
-.booking-form p { /* Styles for form fields rendered by form.as_p */
+.booking-form p {
     margin-bottom: 1.5rem;
     text-align: left;
 }
@@ -134,7 +137,7 @@
 
 .booking-form input[type="text"],
 .booking-form input[type="email"],
-.booking-form input[type="tel"], /* For phone number */
+.booking-form input[type="tel"],
 .booking-form input[type="number"],
 .booking-form input[type="date"],
 .booking-form textarea {
@@ -164,7 +167,7 @@
     transition: background-color 0.3s ease;
     margin-top: 2rem;
     width: 100%;
-    max-width: 30rem; /* Max width for the button */
+    max-width: 30rem;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -177,7 +180,27 @@
     background-color: #1a66c9;
 }
 
-/* Responsive adjustments for tour_detail page */
+/* Write Review Button Styling */
+.write-review-btn {
+    display: block;
+    margin: 3rem auto 0;
+    text-align: center;
+    background-color: #007bff;
+    color: white;
+    padding: 1.2rem 2.5rem;
+    border-radius: 3rem;
+    text-decoration: none;
+    font-size: 1.6rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.write-review-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .tour-detail-container {
         padding: 2rem;
